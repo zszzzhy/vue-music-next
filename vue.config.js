@@ -1,3 +1,5 @@
+const registerRouter = require('./backend/router')
+
 module.exports = {
   css: {
     // 向 CSS 相关的 loader 传递选项
@@ -10,6 +12,11 @@ module.exports = {
           @import "~@/assets/scss/mixin.scss";
         `
       }
+    }
+  },
+  devServer: {
+    before (app) {
+      registerRouter(app)
     }
   }
 }

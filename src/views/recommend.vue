@@ -5,8 +5,22 @@
 </template>
 
 <script>
+import { getRecommend } from '@/service/recommend'
+
 export default {
-  name: 'recommend'
+  name: 'recommend',
+  setup () {
+    const getList = async () => {
+      const data = await getRecommend()
+      console.log(data)
+    }
+
+    getList()
+
+    return {
+
+    }
+  }
 }
 </script>
 
