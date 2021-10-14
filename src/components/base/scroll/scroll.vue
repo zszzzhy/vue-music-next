@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { ref, toRefs } from '@vue/reactivity'
+import { ref } from '@vue/reactivity'
 import useScroll from './use-scroll'
 
 export default {
