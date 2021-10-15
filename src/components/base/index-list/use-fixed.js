@@ -1,14 +1,38 @@
-import { ref } from '@vue/reactivity'
+import { ref, computed } from '@vue/reactivity'
 import { watch, nextTick } from '@vue/runtime-core'
 
 export default function useFixed (props) {
   const groupRef = ref(null)
   const listHeights = ref([])
   const scrollY = ref(0)
+  const currentIndex = ref(0)
 
-  watch(() => props.data, async () => {
-    await nextTick()
-    calculate()
+  const fixedTitle = computed(() => {
+    if (scrollY.value < 0) {
+      return ''
+    }
+    const currentGroup = props.data[currentIndex.value]
+    return currentGroup ? currentGroup.title : ''
+  })
+
+  watch(
+    () => props.data,
+    async () => {
+      await nextTick()
+      calculate()
+    }
+  )
+
+  watch(scrollY, newY => {
+    const listHeightsVal = listHeights.value
+    for (let i = 0; i < listHeightsVal.length - 1; i++) {
+      const heightTop = listHeightsVal[i]
+      const heigthBottom = listHeightsVal[i + 1]
+
+      if (newY >= heightTop && newY <= heigthBottom) {
+        currentIndex.value = i
+      }
+    }
   })
 
   function calculate () {
@@ -31,6 +55,7 @@ export default function useFixed (props) {
 
   return {
     groupRef,
-    onScroll
+    onScroll,
+    fixedTitle
   }
 }

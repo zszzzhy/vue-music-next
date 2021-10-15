@@ -15,7 +15,7 @@ export default function useScroll (wrapperRef, options, emit) {
       ...options
     })
 
-    if (options.proboType > 0) {
+    if (options.probeType > 0) {
       scroll.value.on('scroll', pos => {
         emit('scroll', pos)
       })
