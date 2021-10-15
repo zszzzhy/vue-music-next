@@ -205,7 +205,7 @@ function registerRecommend (app) {
               albums
             }
           })
-        }, 2000)
+        }, 1000)
         // res.json({
         //   code: ERR_OK,
         //   result: {
