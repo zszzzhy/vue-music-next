@@ -4,7 +4,7 @@
       <li v-for="group in data" :key="group.title" class="group">
         <h2 class="title">{{ group.title }}</h2>
         <ul>
-          <li v-for="item in group.list" :key="item.id" class="item">
+          <li v-for="item in group.list" :key="item.id" class="item" @click="onItemClick(item)">
             <img v-lazy="item.pic" class="avatar" />
             <span class="name">{{ item.name }}</span>
           </li>
@@ -26,6 +26,7 @@ export default {
   components: {
     Scroll
   },
+  emits: ['select'],
   props: {
     data: {
       type: Array,
@@ -34,13 +35,19 @@ export default {
       }
     }
   },
-  setup (props) {
+  setup (props, { emit }) {
     const { groupRef, onScroll, fixedTitle, fixedStyle } = useFixed(props)
+    // 返回访问，歌手详情页，需要的数据
+    const onItemClick = (item) => {
+      emit('select', item)
+    }
 
     return {
+      onItemClick,
       groupRef,
       onScroll,
-      fixedTitle
+      fixedTitle,
+      fixedStyle
     }
   }
 }
